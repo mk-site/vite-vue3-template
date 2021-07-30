@@ -15,9 +15,10 @@ npm run build
 
 #### 设置vue组件库全局样式   vite.config.js => modifyVars
 
-#### vuex使用
+#### vuex使用  vuex的ts提示封装好了
     1、参考pages/About路径
     2、参考 hooks/useStore ts封装成自动提示
+    3、ts封装 store/helper.ts 文件封装ts
 
 #### eslint使用
     1、vscode安装Eslint插件
