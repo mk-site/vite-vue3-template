@@ -1,0 +1,38 @@
+{
+    "compilerOptions": {
+        "outDir": "dist",
+        "target": "esnext",
+        "module": "esnext",
+        "strict": true,
+        "allowJs": true,
+        "allowSyntheticDefaultImports": true,
+        "lib": ["esnext", "dom"],
+        "sourceMap": true,
+        "jsx": "preserve",
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "experimentalDecorators": true,
+        "skipLibCheck": true,
+        "baseUrl": ".",
+        "rootDir": "./",
+        "paths": {
+            "@/*": ["src/*"],
+            "hooks/*": ["./src/hooks/*"],
+            "utils/*": ["./src/utils/*"],
+            "pages/*": ["./src/pages/*"],
+            "action/*": ["./src/action/*"],
+            "router/*": ["./src/store/*"],
+            "store/*": ["./src/store/*"],
+            "component/*": ["./src/component/*"],
+            "assets/*": ["./src/assets/*"]
+        },
+    },
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.vue",
+        "src/**/*.d.ts",
+        "src/**/*.tsx",
+        "./typings/**/*"
+    ],
+    "exclude": ["node_modules",  "dist"]
+}
