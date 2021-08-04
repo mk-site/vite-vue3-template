@@ -10,6 +10,15 @@ const nodeResolve = (dir) => {
     return path.resolve(process.cwd(), dir);
 };
 
+// 代理接口
+let proxy = {};
+
+try {
+    proxy = require('.proxy')();
+} catch (error) {
+    console.log('加载代理失败，未配置本地代理，请忽略此');
+}
+
 const viteConfig = ({ command }) => {
     console.log('starting...');
     const baseConfig = {
@@ -100,6 +109,9 @@ const viteConfig = ({ command }) => {
             server: {
                 host: '0.0.0.0',
                 hmr: true,
+                proxy: {
+                    ...proxy
+                }
             },
         };
     }
