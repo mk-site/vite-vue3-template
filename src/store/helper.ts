@@ -1,4 +1,4 @@
-import { CommitOptions, DispatchOptions } from 'vuex';
+import { CommitOptions, DispatchOptions, Commit as OriginCommit } from 'vuex';
 import { modules } from './index';
 
 // 获取getters对象
@@ -65,9 +65,14 @@ interface Dispatch {
     <K extends keyof ActionsModules>(type: K, payload?: ActionsModules[K], options?: DispatchOptions): Promise<any>;
 }
 
-interface ActionContext<S, R = unknown> {
+interface ActionContextCommit<Module> {
+    <K extends keyof Module>(obj: { type: K, payload: GetParameters<Module[K]> }, options?: CommitOptions): unknown;
+    <K extends keyof Module>(type: K, payload?: GetParameters<Module[K]>, options?: CommitOptions): unknown;
+}
+
+interface ActionContext<S, K, R = unknown> {
     dispatch: Dispatch;
-    commit: Commit;
+    commit: ActionContextCommit<K>;
     state: S;
     getters: Getters;
     rootState: R;
@@ -77,6 +82,7 @@ interface ActionContext<S, R = unknown> {
 export {
     Getters,
     Actions,
+    ActionContextCommit,
     Mutations,
     Commit,
     Dispatch,

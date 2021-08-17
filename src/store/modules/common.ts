@@ -34,11 +34,12 @@ const mutations = {
 };
 
 const actions = {
-    get_data: ({ commit, state }: ActionContext<commonState>, payload: boolean): void => {
+    get_data: ({ commit, state }: ActionContext<commonState, typeof mutations>, payload: boolean): void => {
         console.log('action执行成功', payload);
         // setTimeout(function () {
         //     const payload = false;
-        //     commit('set_loading', payload);
+        //     // commit('set_loading', payload);
+        //     // commit('set_obj', payload);
         // }, 2000);
     },
 };
