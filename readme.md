@@ -27,4 +27,19 @@ npm run build
 #### 移动端项目使用
     1、删除 antd-design-vue依赖包
     2、更改vite-config.js 依赖包按钮加载
-    3、设置以rem为单位还是vw为单位简单更改配置即可
+    3、设置vite-config.js isMobile与mobileUnit变量值即可
+
+#### 移动端1px 解决方案
+```css
+.test {
+    border-bottom: 1Px solid #ddd;
+}
+[data-dpr="2"] .test {
+    border-bottom: 0.5Px solid #ddd;
+}
+
+[data-dpr="3"] .test {
+    border-bottom: 0.33Px solid #ddd;
+}
+```
+

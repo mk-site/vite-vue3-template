@@ -4,11 +4,15 @@ import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import legacy from '@vitejs/plugin-legacy';
 import styleImport from 'vite-plugin-style-import';
+import flexible from 'vite-plugin-flexible';
 import path from 'path';
 
 const nodeResolve = (dir) => {
     return path.resolve(process.cwd(), dir);
 };
+
+const isMobile = false;
+const mobileUnit = 'rem'; // 值为rem | vw
 
 // 代理接口
 let proxy = {};
@@ -23,6 +27,11 @@ const viteConfig = ({ command }) => {
     console.log('starting...');
     const baseConfig = {
         base: '/site/',
+        define: {
+            'process.env': {
+                'BUILD_ENV': process.env.BUILD_ENV
+            }
+        },
         resolve: {
             alias: [
                 { find: /^@\//, replacement: nodeResolve('src') + '/'},
@@ -69,23 +78,30 @@ const viteConfig = ({ command }) => {
                         ],
                         grid: true,
                     }),
-                    // 移动端配置
-                    // require('postcss-px-to-viewport')({
-                    //     viewportWidth: 375, // 设计稿宽度
-                    //     viewportHeight: 667, // 设计稿高度，可以不指定
-                    //     unitPrecision: 3, // px to vw无法整除时，保留几位小数
-                    //     viewportUnit: 'vw', // 转换成vw单位
-                    //     selectorBlackList: ['.ignore', '.hairlines'], // 不转换的类名
-                    //     minPixelValue: 1, // 小于1px不转换
-                    //     mediaQuery: false, // 允许媒体查询中转换
-                    // })
-                ]
+                    // 移动端配置 rem单位
+                    isMobile && mobileUnit === 'rem' && require('postcss-pxtorem')({
+                        rootValue: 37.5,
+                        propList: ['*'],
+                        unitPrecision: 5
+                    }),
+                    // 移动端配置  vw单位
+                    isMobile && mobileUnit === 'vw' && require('postcss-px-to-viewport')({
+                        viewportWidth: 375, // 设计稿宽度
+                        viewportHeight: 667, // 设计稿高度，可以不指定
+                        unitPrecision: 3, // px to vw无法整除时，保留几位小数
+                        viewportUnit: 'vw', // 转换成vw单位
+                        selectorBlackList: ['.ignore', '.hairlines'], // 不转换的类名
+                        minPixelValue: 1, // 小于1px不转换
+                        mediaQuery: false, // 允许媒体查询中转换
+                    })
+                ].filter(Boolean)
             }
         },
     };
     const basePlugins = [
         vue(),
         vueJsx(),
+        isMobile && mobileUnit === 'rem' && flexible(),
         legacy({
             targets: ['ie >= 11'],
             additionalLegacyPolyfills: ['regenerator-runtime/runtime']
@@ -99,7 +115,7 @@ const viteConfig = ({ command }) => {
                 },
             }]
         })
-    ];
+    ].filter(Boolean);
     if (command === 'serve') {  // serve 独有配置
         return {
             ...baseConfig,

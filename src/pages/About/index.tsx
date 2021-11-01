@@ -1,6 +1,5 @@
 import { defineComponent, reactive } from 'vue';
 import Counter from 'component/Counter';
-import { Button } from 'ant-design-vue';
 import useStore from 'hooks/useStore';
 import './index.less';
 
@@ -25,7 +24,6 @@ const About = defineComponent({
         return () => (
             <div>
                 about页面2 - {String(state.common.loading)}
-                <Button type="primary">测试按钮</Button>
                 <div class="test" onClick={clickTest}>测试</div>
                 <Counter></Counter>
             </div>

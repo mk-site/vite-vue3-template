@@ -1,27 +1,20 @@
 <template>
     <div>
         about页面2 - {{ String(state.common.loading) }}
-        <Button type="primary">
-            测试按钮
-        </Button>
         <div
             class="test"
             @click="clickTest"
         >
             测试
         </div>
-        <Counter />
     </div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Button } from 'ant-design-vue';
 import useStore from 'hooks/useStore';
+import './index.less';
 export default defineComponent({
     name: 'About',
-    components: {
-        Button,
-    },
     setup() {
         const { state, dispatch, getters, commit } = useStore();
         const clickTest = () => {

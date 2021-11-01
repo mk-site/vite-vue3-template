@@ -1,5 +1,11 @@
-import { message } from 'ant-design-vue';
+// import { message } from 'ant-design-vue';
 import axiosHttp, { createAxiosHttp } from './originAxios';
+
+const message = {
+    error(msg: string) {
+        console.error(msg);
+    }
+};
 
 type IOptions = {
     hideError?: boolean;
